@@ -1,9 +1,10 @@
+@import 'styles/variables';
 .container {
 
 }
 
 .theme-toggle-container {
     position: fixed;
-    top:18px;
-    right:36px;
+    top:$sp-lg;
+    right:$sp-xxl;
 }

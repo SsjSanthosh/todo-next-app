@@ -1,14 +1,16 @@
-import { SubTaskType, TodoType } from "utils/types";
+import { TodoType } from "utils/types";
 import styles from "./TodoItem.module.scss";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
+import { MdDeleteOutline } from "react-icons/md";
 import { Button, Checkbox } from "@chakra-ui/react";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import TodoForm from "components/TodoForm";
 import { TodoContext } from "context/todos";
 
 const TodoItem = ({ todo }: { todo: TodoType }) => {
   const [isSubTaskVisible, setIsSubTaskVisible] = useState(false);
-  const { toggleTaskStatus, toggleSubTaskStatus } = useContext(TodoContext);
+  const { toggleTaskStatus, toggleSubTaskStatus, deleteTask, deleteSubTask } =
+    useContext(TodoContext);
   const toggleSubTaskForm = () => setIsSubTaskVisible(!isSubTaskVisible);
   return (
     <div className={styles["container"]}>
@@ -20,16 +22,29 @@ const TodoItem = ({ todo }: { todo: TodoType }) => {
             size="lg"
             onChange={() => toggleTaskStatus(todo.id)}
           >
-            <p className={styles["task-name"]}>{todo.name}</p>
+            <p
+              className={`${styles["subtask-name"]} ${
+                todo.done && styles["done-text"]
+              }`}
+            >
+              {todo.name}
+            </p>
           </Checkbox>
-          <Button size="sm" onClick={toggleSubTaskForm}>
-            {isSubTaskVisible ? <AiOutlineClose /> : <AiOutlinePlus />}
-          </Button>
+          <div className={styles["task-actions"]}>
+            <Button size="sm" onClick={toggleSubTaskForm}>
+              {isSubTaskVisible ? <AiOutlineClose /> : <AiOutlinePlus />}
+            </Button>
+            <Button size="sm" onClick={() => deleteTask(todo.id)}>
+              <MdDeleteOutline />
+            </Button>
+          </div>
         </div>
+        
+        {/* Sub tasks list */}
         {!!todo.subTasks.length &&
           todo.subTasks.map((sub) => {
             return (
-              <div className={styles["subtask-container"]} key={sub.id}>
+              <div key={sub.id} className={styles["subtask-container"]}>
                 <Checkbox
                   defaultChecked={sub.done}
                   checked={sub.done}
@@ -37,8 +52,23 @@ const TodoItem = ({ todo }: { todo: TodoType }) => {
                   size="md"
                   onChange={() => toggleSubTaskStatus(todo.id, sub.id)}
                 >
-                  <p className={styles["subtask-name"]}>{sub.name}</p>
+                  <span className={styles["subtask"]}>
+                    <span
+                      className={`${styles["subtask-name"]} ${
+                        sub.done && styles["done-text"]
+                      }`}
+                    >
+                      {sub.name}
+                    </span>
+                  </span>
                 </Checkbox>
+                <span
+                  className={styles["subtask-delete-container"]}
+                  onClick={() => deleteSubTask(todo.id, sub.id)}
+                  role="button"
+                >
+                  <MdDeleteOutline size={16} />
+                </span>
               </div>
             );
           })}

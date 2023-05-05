@@ -8,6 +8,12 @@
     row-gap: $sp-xl;
 }
 
+.logout-container {
+    position:fixed;
+    top:$sp-lg;
+    right:$sp-xxxl * 2.5;
+}
+
 .todo-form-container {
     border-bottom: 1px solid rgba(100, 97, 97, 0.5);
     padding-bottom: $sp-xxl;
