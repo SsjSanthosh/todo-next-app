@@ -13,16 +13,14 @@ import AppLayout from "components/AppLayout";
 import { UserContext } from "context/user";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { FormEvent, useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { LOGIN_ENDPOINT } from "utils/constants";
 import { validateEmail } from "utils/functions";
 
 import styles from "./LoginPage.module.scss";
-import {
-  LoginErrorsType,
-  LoginValueType,
-} from "./LoginPage.types";
+import { LoginErrorsType, LoginValueType } from "./LoginPage.types";
 
 const initialErrorState: LoginErrorsType = {
   password: null,
@@ -43,7 +41,7 @@ const LoginPage = () => {
   const [errors, setErrors] = useState(initialErrorState);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const { setUserToken } = useContext(UserContext);
+  const { setUserToken, user } = useContext(UserContext);
   const router = useRouter();
 
   const isFormValid = () => {
@@ -90,6 +88,10 @@ const LoginPage = () => {
       return { ...initialErrorState };
     });
   };
+
+  useEffect(() => {
+    if (user.token) router.push("/");
+  }, [user.token, router]);
 
   return (
     <>
@@ -156,7 +158,12 @@ const LoginPage = () => {
             </FormControl>
             {/* Button submit */}
             <FormControl isInvalid={!!errors.auth}>
-              <Button type="submit" colorScheme="blue" isLoading={loading} style={{width:'100%'}}>
+              <Button
+                type="submit"
+                colorScheme="blue"
+                isLoading={loading}
+                style={{ width: "100%" }}
+              >
                 Log in
               </Button>
               <FormErrorMessage mt="4">{errors.auth}</FormErrorMessage>
