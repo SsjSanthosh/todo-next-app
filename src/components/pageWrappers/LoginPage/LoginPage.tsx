@@ -86,9 +86,7 @@ const LoginPage = () => {
     setIsPasswordVisible(!isPasswordVisible);
 
   const resetErrors = () => {
-    console.log("called");
     setErrors((old) => {
-      console.log({ old });
       return { ...initialErrorState };
     });
   };

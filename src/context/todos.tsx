@@ -72,11 +72,6 @@ const TodoProvider = ({ children }: ChildrenType) => {
       );
       const subTask = temp[taskIndex].subTasks[subTaskIndex];
       temp[taskIndex].subTasks[subTaskIndex].done = !subTask.done;
-      console.log(
-        temp[taskIndex],
-        temp[taskIndex].subTasks[subTaskIndex],
-        subTask
-      );
       setTodos([...temp]);
       saveTasks(temp);
     }
