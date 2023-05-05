@@ -32,75 +32,68 @@ const initialErrorState: LoginErrorsType = {
   auth: null,
 };
 
-const initialState: LoginFormType = {
-  loading: false,
-  errors: initialErrorState,
-  values: {
-    email: "",
-    password: "",
-  },
+const initialState: LoginValueType = {
+  email: "",
+  password: "",
 };
 
 const showPasswordSize = 24;
 
 const LoginPage = () => {
-  const [form, setForm] = useState<LoginFormType>(initialState);
+  const [values, setValues] = useState(initialState);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(initialErrorState);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   const { setUserToken } = useContext(UserContext);
   const router = useRouter();
+
+  const isFormValid = () => {
+    const errors = initialErrorState;
+    const { email, password } = values;
+    if (!email.length) errors.email = "Email is required to login.";
+    if (!password.length) errors.password = "Password cannot be empty.";
+    if (!validateEmail(email)) errors.email = "Please enter a valid email";
+    if (!errors.email && !errors.password) return true;
+    setErrors({ ...errors });
+    return false;
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isFormValid()) {
-      return;
-    }
-    const { email, password } = form.values;
+    const { email, password } = values;
     const body = { email, password };
-
+    setErrors({ ...initialErrorState });
     try {
-      setForm({ ...form, loading: true });
+      setLoading(true);
       const rdata = await axios.post(LOGIN_ENDPOINT, { ...body });
       const token = rdata.data.token;
       setUserToken(token);
       router.push("/");
     } catch (err) {
-      setForm({
-        ...form,
-        errors: {
-          email: null,
-          password: null,
-          auth: "Invalid email/password combination, please try again",
-        },
+      setErrors({
+        ...initialErrorState,
+        auth: "Invalid email or password, please try again.",
       });
     } finally {
-      setForm({ ...form, loading: false });
+      setLoading(false);
     }
   };
 
-  const resetErrors = () => {
-    setForm({ ...form, errors: initialErrorState });
-  };
-
   const updateValue = (value: string, key: keyof LoginValueType) => {
-    setForm({
-      ...form,
-      values: { ...form.values, [key]: value },
-      errors: initialErrorState,
-    });
-  };
-
-  const isFormValid = () => {
-    const errors = initialErrorState;
-    const { email, password } = form.values;
-    if (!email.length) errors.email = "Email is required to login.";
-    if (!password.length) errors.password = "Password cannot be empty.";
-    if (!validateEmail(email)) errors.email = "Please enter a valid email";
-    else return true;
-    setForm({ ...form, errors });
-    return false;
+    setValues({ ...values, [key]: value });
   };
 
   const togglePasswordVisibility = () =>
     setIsPasswordVisible(!isPasswordVisible);
+
+  const resetErrors = () => {
+    console.log("called");
+    setErrors((old) => {
+      console.log({ old });
+      return { ...initialErrorState };
+    });
+  };
 
   return (
     <>
@@ -111,19 +104,22 @@ const LoginPage = () => {
         <form className={styles["container"]} onSubmit={(e) => handleSubmit(e)}>
           <FormControl className={styles["form-items"]}>
             <h1>Log in to see your To-dos</h1>
+            {errors.email}
             {/* Email input */}
             <FormControl
               className={styles["form-item"]}
-              isInvalid={!!form.errors.email?.length}
+              isInvalid={!!errors.email?.length}
             >
               <FormLabel htmlFor="email">Email</FormLabel>
               <Input
-                type="text"
-                value={form.values.email}
+                required
+                type="email"
+                value={values.email}
                 onChange={(e) => updateValue(e.target.value, "email")}
+                onFocus={resetErrors}
               />
-              <FormErrorMessage>{form.errors.email}</FormErrorMessage>
-              {!form.errors.email && (
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
+              {!errors.email && (
                 <FormHelperText>
                   Enter your account email address
                 </FormHelperText>
@@ -132,13 +128,15 @@ const LoginPage = () => {
             {/* Password Input */}
             <FormControl
               className={styles["form-item"]}
-              isInvalid={!!form.errors.password?.length}
+              isInvalid={!!errors.password?.length}
             >
               <FormLabel htmlFor="email">Password</FormLabel>
               <InputGroup>
                 <Input
+                  required
                   type={isPasswordVisible ? "text" : "password"}
-                  value={form.values.password}
+                  value={values.password}
+                  minLength={8}
                   onChange={(e) => updateValue(e.target.value, "password")}
                 />
                 <InputRightElement>
@@ -146,7 +144,6 @@ const LoginPage = () => {
                     size="sm"
                     onClick={togglePasswordVisibility}
                     style={{ height: "25px", padding: "12px 4px" }}
-                    isLoading={form.loading}
                   >
                     {isPasswordVisible ? (
                       <AiFillEye size={showPasswordSize} />
@@ -156,14 +153,18 @@ const LoginPage = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-              {!form.errors.email && (
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+              {!errors.email && (
                 <FormHelperText>Passwords are case sensitive</FormHelperText>
               )}
             </FormControl>
-            <Button type="submit" colorScheme="blue">
-              Log in
-            </Button>
+            {/* Button submit */}
+            <FormControl isInvalid={!!errors.auth}>
+              <Button type="submit" colorScheme="blue" isLoading={loading} style={{width:'100%'}}>
+                Log in
+              </Button>
+              <FormErrorMessage mt="4">{errors.auth}</FormErrorMessage>
+            </FormControl>
           </FormControl>
         </form>
       </AppLayout>

@@ -8,7 +8,5 @@ export interface LoginErrorsType {
   auth: null | string;
 }
 export interface LoginFormType {
-  loading: boolean;
-  errors: LoginErrorsType;
   values: LoginValueType;
 }

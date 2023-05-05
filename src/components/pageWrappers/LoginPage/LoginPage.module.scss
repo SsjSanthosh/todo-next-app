@@ -11,5 +11,12 @@
 }
 
 .password-input {
-    padding-right: $sp-xxxl;
+  padding-right: $sp-xxxl;
+}
+
+@media (max-width: 560px) {
+  .container {
+    width: 85%;
+    margin: 20% auto;
+  }
 }
