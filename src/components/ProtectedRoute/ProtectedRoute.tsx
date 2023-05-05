@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children }: ChildrenType) => {
     if (user.token && sessionToken) {
       setIsAuthenticated(true);
     }
-  }, [user, router, setUserToken]);
+  }, [user.token, router, setUserToken]);
 
   return !isAuthenticated ? (
     <div className={styles["skeleton-container"]}>

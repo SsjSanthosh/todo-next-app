@@ -1,0 +1,18 @@
+@import "styles/variables";
+.container {
+    input {
+        padding-right: 3.5rem;
+    }
+}
+
+.form-right-element {
+
+    color:#a7a7a7;
+    display: flex;
+    align-items: center;
+    column-gap: $sp-sm;
+    font-size: 12px;
+}
+.form-right-element-icon {
+    font-size: $sp-lg;
+}

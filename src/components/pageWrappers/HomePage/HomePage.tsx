@@ -3,6 +3,7 @@ import styles from "./HomePage.module.scss";
 import Head from "next/head";
 import AppLayout from "components/AppLayout";
 import ProtectedRoute from "components/ProtectedRoute";
+import TodoForm from "components/TodoForm";
 const HomePage = () => {
   return (
     <AppLayout>
@@ -11,7 +12,11 @@ const HomePage = () => {
           <Head>
             <title>Todo list - Dashboard</title>
           </Head>
-          <div className={styles["container"]}></div>
+          <main className={styles["container"]}>
+            <div className={styles["todo-form-container"]}>
+              <TodoForm />
+            </div>
+          </main>
         </>
       </ProtectedRoute>
     </AppLayout>

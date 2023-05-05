@@ -4,7 +4,6 @@ import { setSessionStorageToken } from "utils/functions";
 
 const initialState: UserType = {
   token: null,
-  todos: [],
 };
 const UserContext = React.createContext<UserContextType>({} as UserContextType);
 
