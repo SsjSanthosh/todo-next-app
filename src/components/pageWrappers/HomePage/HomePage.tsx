@@ -4,6 +4,7 @@ import Head from "next/head";
 import AppLayout from "components/AppLayout";
 import ProtectedRoute from "components/ProtectedRoute";
 import TodoForm from "components/TodoForm";
+import TodoList from "components/TodoList";
 const HomePage = () => {
   return (
     <AppLayout>
@@ -14,7 +15,10 @@ const HomePage = () => {
           </Head>
           <main className={styles["container"]}>
             <div className={styles["todo-form-container"]}>
-              <TodoForm />
+              <TodoForm type="task" />
+            </div>
+            <div className={styles["todo-list-container"]}>
+              <TodoList />
             </div>
           </main>
         </>

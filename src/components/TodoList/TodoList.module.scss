@@ -1,0 +1,14 @@
+@import "styles/variables";
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: $sp-lg;
+  align-self: flex-end;
+}
+
+.empty-task-container {
+  text-align: center;
+  color: #a7a7a7;
+}
+
+

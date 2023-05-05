@@ -3,4 +3,11 @@
     padding:$sp-xxxl * 2;
     width:80%;
     max-width: 768px;
+    display: flex;
+    flex-direction: column;
+    row-gap: $sp-xxl;
+}
+
+.todo-form-container {
+    border-bottom: 1px solid rgba(100, 97, 97, 0.5);
 }

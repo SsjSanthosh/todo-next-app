@@ -1,6 +1,6 @@
 import { ChildrenType, UserContextType, UserType } from "utils/types";
 import React, { useState } from "react";
-import { setSessionStorageToken } from "utils/functions";
+import { removeSessionStorageToken, setSessionStorageToken } from "utils/functions";
 
 const initialState: UserType = {
   token: null,
@@ -17,6 +17,7 @@ const UserProvider = ({ children }: ChildrenType) => {
 
   const logoutUser = () => {
     setUser(initialState);
+    removeSessionStorageToken();
   };
   return (
     <UserContext.Provider value={{ user, setUserToken, logoutUser }}>

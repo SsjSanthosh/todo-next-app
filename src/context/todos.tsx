@@ -3,26 +3,29 @@ import {
   SubTaskType,
   TodoContextType,
   TodoType,
-  UserContextType,
-  UserType,
 } from "utils/types";
-import React, { useState } from "react";
-import { setSessionStorageToken } from "utils/functions";
+import React, { useCallback, useState } from "react";
+import { saveTasks } from "utils/functions";
 
-const initialState: UserType = {
-  token: null,
-};
 const TodoContext = React.createContext<TodoContextType>({} as TodoContextType);
 
 const TodoProvider = ({ children }: ChildrenType) => {
   const [todos, setTodos] = useState<TodoType[]>([]);
 
+  const setTasksFromStorage = useCallback((tasks: TodoType[]) => {
+    setTodos(tasks);
+  }, []);
+
   const addTask = (task: TodoType) => {
-    setTodos([...todos, task]);
+    const temp = [...todos, task];
+    setTodos(temp);
+    saveTasks(temp);
   };
 
   const deleteTask = (id: string) => {
-    setTodos(todos.filter((todo: TodoType) => todo.id !== id));
+    const temp = todos.filter((todo: TodoType) => todo.id !== id);
+    setTodos(temp);
+    saveTasks(temp);
   };
 
   const addSubTask = (taskId: string, subTask: SubTaskType) => {
@@ -31,6 +34,7 @@ const TodoProvider = ({ children }: ChildrenType) => {
     if (index > -1) {
       temp[index].subTasks = [...temp[index].subTasks, subTask];
       setTodos(temp);
+      saveTasks(temp);
     }
     return;
   };
@@ -43,6 +47,7 @@ const TodoProvider = ({ children }: ChildrenType) => {
         (t) => t.id !== subTaskId
       );
       setTodos(temp);
+      saveTasks(temp);
     }
     return;
   };
@@ -53,6 +58,7 @@ const TodoProvider = ({ children }: ChildrenType) => {
     if (index > -1) {
       temp[index].done = !temp[index].done;
       setTodos(temp);
+      saveTasks(temp);
     }
     return;
   };
@@ -61,17 +67,30 @@ const TodoProvider = ({ children }: ChildrenType) => {
     const temp = [...todos];
     const taskIndex = todos.findIndex((todo) => todo.id === taskId);
     if (taskIndex > -1) {
-      const subTaskIndex = temp[taskIndex].subTasks.findIndex((t)=>t.id === subTaskId);
+      const subTaskIndex = temp[taskIndex].subTasks.findIndex(
+        (t) => t.id === subTaskId
+      );
       const subTask = temp[taskIndex].subTasks[subTaskIndex];
       temp[taskIndex].subTasks[subTaskIndex].done = !subTask.done;
-      setTodos(temp);
+      console.log(temp[taskIndex], temp[taskIndex].subTasks[subTaskIndex], subTask);
+      setTodos([...temp]);
+      saveTasks(temp);
     }
     return;
   };
 
   return (
     <TodoContext.Provider
-      value={{ todos, addSubTask, addTask, deleteTask, deleteSubTask, toggleSubTaskStatus, toggleTaskStatus }}
+      value={{
+        todos,
+        addSubTask,
+        addTask,
+        deleteTask,
+        deleteSubTask,
+        toggleSubTaskStatus,
+        toggleTaskStatus,
+        setTasksFromStorage,
+      }}
     >
       {children}
     </TodoContext.Provider>

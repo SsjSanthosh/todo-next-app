@@ -33,4 +33,5 @@ export interface TodoContextType {
   addSubTask: (id: string, task: SubTaskType) => void;
   toggleTaskStatus: (id: string) => void;
   toggleSubTaskStatus: (taskId: string, subTaskId: string) => void;
+  setTasksFromStorage: (tasks: TodoType[]) => void;
 }
