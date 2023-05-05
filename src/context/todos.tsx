@@ -1,11 +1,11 @@
+import React, { useCallback, useState } from "react";
+import { saveTasks } from "utils/functions";
 import {
   ChildrenType,
   SubTaskType,
   TodoContextType,
   TodoType,
 } from "utils/types";
-import React, { useCallback, useState } from "react";
-import { saveTasks } from "utils/functions";
 
 const TodoContext = React.createContext<TodoContextType>({} as TodoContextType);
 
@@ -72,7 +72,11 @@ const TodoProvider = ({ children }: ChildrenType) => {
       );
       const subTask = temp[taskIndex].subTasks[subTaskIndex];
       temp[taskIndex].subTasks[subTaskIndex].done = !subTask.done;
-      console.log(temp[taskIndex], temp[taskIndex].subTasks[subTaskIndex], subTask);
+      console.log(
+        temp[taskIndex],
+        temp[taskIndex].subTasks[subTaskIndex],
+        subTask
+      );
       setTodos([...temp]);
       saveTasks(temp);
     }

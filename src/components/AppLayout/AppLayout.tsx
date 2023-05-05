@@ -1,6 +1,7 @@
-import { ChildrenType } from "utils/types";
-import styles from "./AppLayout.module.scss";
 import ThemeToggle from "components/ThemeToggle";
+import { ChildrenType } from "utils/types";
+
+import styles from "./AppLayout.module.scss";
 
 const AppLayout = ({ children }: ChildrenType) => {
   return (

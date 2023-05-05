@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
-import styles from "./HomePage.module.scss";
-import Head from "next/head";
+import { Button } from "@chakra-ui/react";
 import AppLayout from "components/AppLayout";
 import ProtectedRoute from "components/ProtectedRoute";
 import TodoForm from "components/TodoForm";
 import TodoList from "components/TodoList";
-import { Button } from "@chakra-ui/react";
 import { UserContext } from "context/user";
+import Head from "next/head";
+import React, { useContext } from "react";
+
+import styles from "./HomePage.module.scss";
 const HomePage = () => {
   const { logoutUser } = useContext(UserContext);
   return (
@@ -17,7 +18,14 @@ const HomePage = () => {
             <title>Todo list - Dashboard</title>
           </Head>
           <div className={styles["logout-container"]}>
-            <Button onClick={logoutUser} colorScheme="blue" variant="outline" size="sm">Log out</Button>
+            <Button
+              onClick={logoutUser}
+              colorScheme="blue"
+              variant="outline"
+              size="sm"
+            >
+              Log out
+            </Button>
           </div>
           <main className={styles["container"]}>
             <div className={styles["todo-form-container"]}>

@@ -1,8 +1,3 @@
-import AppLayout from "components/AppLayout";
-import { FormEvent, useContext, useState } from "react";
-import styles from "./LoginPage.module.scss";
-import Head from "next/head";
-
 import {
   Button,
   FormControl,
@@ -13,18 +8,21 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
+import axios from "axios";
+import AppLayout from "components/AppLayout";
+import { UserContext } from "context/user";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { FormEvent, useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { LOGIN_ENDPOINT } from "utils/constants";
+import { validateEmail } from "utils/functions";
 
+import styles from "./LoginPage.module.scss";
 import {
   LoginErrorsType,
-  LoginFormType,
   LoginValueType,
 } from "./LoginPage.types";
-import { validateEmail } from "utils/functions";
-import axios from "axios";
-import { LOGIN_ENDPOINT } from "utils/constants";
-import { UserContext } from "context/user";
-import { useRouter } from "next/router";
 
 const initialErrorState: LoginErrorsType = {
   password: null,

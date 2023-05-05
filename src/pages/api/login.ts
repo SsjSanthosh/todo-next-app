@@ -1,6 +1,6 @@
+import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 import baseHandler from "utils/baseApiHandler";
-import jwt from "jsonwebtoken";
 import { USER_CREDENTIALS } from "utils/constants";
 
 const handler = baseHandler();

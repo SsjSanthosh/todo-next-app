@@ -1,6 +1,7 @@
-import { FormControl, FormLabel, Switch, useColorMode } from "@chakra-ui/react";
-import { MdDarkMode } from "react-icons/md";
+import { FormControl, Switch, useColorMode } from "@chakra-ui/react";
 import { BsFillSunFill } from "react-icons/bs";
+import { MdDarkMode } from "react-icons/md";
+
 import styles from "./ThemeToggle.module.scss";
 
 const ThemeToggle = () => {

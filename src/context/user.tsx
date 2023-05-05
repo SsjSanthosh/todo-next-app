@@ -1,6 +1,9 @@
-import { ChildrenType, UserContextType, UserType } from "utils/types";
 import React, { useState } from "react";
-import { removeSessionStorageToken, setSessionStorageToken } from "utils/functions";
+import {
+  removeSessionStorageToken,
+  setSessionStorageToken,
+} from "utils/functions";
+import { ChildrenType, UserContextType, UserType } from "utils/types";
 
 const initialState: UserType = {
   token: null,

@@ -1,9 +1,10 @@
 import "styles/normalize.scss";
 import "styles/global.scss";
-import type { AppProps } from "next/app";
+
 import { ChakraProvider } from "@chakra-ui/react";
-import { UserProvider } from "context/user";
 import { TodoProvider } from "context/todos";
+import { UserProvider } from "context/user";
+import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

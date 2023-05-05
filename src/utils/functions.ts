@@ -1,6 +1,7 @@
-import { TASKS_STORAGE_NAME, TOKEN_STORAGE_NAME } from "./constants";
 import * as DOMPurify from "dompurify";
 import { nanoid } from "nanoid";
+
+import { TASKS_STORAGE_NAME, TOKEN_STORAGE_NAME } from "./constants";
 import { SubTaskType, TodoType } from "./types";
 
 export const validateEmail = (email: string) => {

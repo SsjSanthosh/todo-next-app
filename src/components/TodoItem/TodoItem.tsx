@@ -1,11 +1,12 @@
-import { TodoType } from "utils/types";
-import styles from "./TodoItem.module.scss";
-import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
-import { MdDeleteOutline } from "react-icons/md";
 import { Button, Checkbox } from "@chakra-ui/react";
-import { useContext, useState } from "react";
 import TodoForm from "components/TodoForm";
 import { TodoContext } from "context/todos";
+import { useContext, useState } from "react";
+import { AiOutlineClose,AiOutlinePlus } from "react-icons/ai";
+import { MdDeleteOutline } from "react-icons/md";
+import { TodoType } from "utils/types";
+
+import styles from "./TodoItem.module.scss";
 
 const TodoItem = ({ todo }: { todo: TodoType }) => {
   const [isSubTaskVisible, setIsSubTaskVisible] = useState(false);
@@ -39,7 +40,7 @@ const TodoItem = ({ todo }: { todo: TodoType }) => {
             </Button>
           </div>
         </div>
-        
+
         {/* Sub tasks list */}
         {!!todo.subTasks.length &&
           todo.subTasks.map((sub) => {

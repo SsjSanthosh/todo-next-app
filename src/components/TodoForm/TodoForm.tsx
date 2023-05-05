@@ -7,14 +7,15 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useContext, useState, FormEvent, useRef, useEffect } from "react";
-import { AiOutlinePlus, AiOutlineEnter } from "react-icons/ai";
-import styles from "./TodoForm.module.scss";
 import { TodoContext } from "context/todos";
-import { generateSubTask, generateTask } from "utils/functions";
-import { AUTH_ENDPOINT } from "utils/constants";
-import { useRouter } from "next/router";
 import { UserContext } from "context/user";
+import { useRouter } from "next/router";
+import { FormEvent, useContext, useEffect,useRef, useState } from "react";
+import { AiOutlineEnter,AiOutlinePlus } from "react-icons/ai";
+import { AUTH_ENDPOINT } from "utils/constants";
+import { generateSubTask, generateTask } from "utils/functions";
+
+import styles from "./TodoForm.module.scss";
 
 const TodoForm = ({
   type,

@@ -1,12 +1,12 @@
-import AppLayout from "components/AppLayout";
-import styles from "./ProtectedRoute.module.scss";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "context/user";
-import { useRouter } from "next/router";
-import { getSessionStorageToken, getTasks } from "utils/functions";
-import { ChildrenType } from "utils/types";
 import { SkeletonText } from "@chakra-ui/react";
 import { TodoContext } from "context/todos";
+import { UserContext } from "context/user";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import { getSessionStorageToken, getTasks } from "utils/functions";
+import { ChildrenType } from "utils/types";
+
+import styles from "./ProtectedRoute.module.scss";
 
 const ProtectedRoute = ({ children }: ChildrenType) => {
   const { user, setUserToken } = useContext(UserContext);
