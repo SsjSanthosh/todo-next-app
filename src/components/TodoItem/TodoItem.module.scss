@@ -27,3 +27,12 @@
     flex-direction: row;
     row-gap: $sp-lg;
 }
+
+@media (max-width: 480px) {
+    .task-name {
+        font-size: 16px;
+    }
+    .subtask-name {
+        font-size: 14px;
+    }
+}

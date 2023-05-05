@@ -1,4 +1,5 @@
 import { TASKS_STORAGE_NAME, TOKEN_STORAGE_NAME } from "./constants";
+import * as DOMPurify from "dompurify";
 import { nanoid } from "nanoid";
 import { SubTaskType, TodoType } from "./types";
 
@@ -21,7 +22,7 @@ export const removeSessionStorageToken = () => {
 
 export const generateTask = (name: string): TodoType => {
   return {
-    name,
+    name: DOMPurify.sanitize(name),
     id: nanoid(),
     subTasks: [],
     done: false,
@@ -30,7 +31,7 @@ export const generateTask = (name: string): TodoType => {
 
 export const generateSubTask = (name: string): SubTaskType => {
   return {
-    name,
+    name: DOMPurify.sanitize(name),
     id: nanoid(),
     done: false,
   };

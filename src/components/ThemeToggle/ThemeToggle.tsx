@@ -21,7 +21,7 @@ const ThemeToggle = () => {
           name="theme-toggle"
           onChange={toggleColorMode}
           defaultChecked={!isDarkMode}
-          size="lg"
+          size="md"
         ></Switch>
       </FormControl>
     </div>

@@ -5,9 +5,30 @@
     max-width: 768px;
     display: flex;
     flex-direction: column;
-    row-gap: $sp-xxl;
+    row-gap: $sp-xl;
 }
 
 .todo-form-container {
     border-bottom: 1px solid rgba(100, 97, 97, 0.5);
+    padding-bottom: $sp-xxl;
+}
+
+@media (max-width: 976px) {
+    .container {
+        width:90%;
+        padding:$sp-xxxl * 2 $sp-xxl;
+        h1 {
+            font-size: 24px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width:95%;
+        padding:$sp-xxxl * 1.5 $sp-lg;
+        h1 {
+            font-size: 18px;
+        }
+    }
 }
