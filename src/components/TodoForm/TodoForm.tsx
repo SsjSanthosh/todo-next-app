@@ -70,7 +70,7 @@ const TodoForm = ({
 
   return (
     <div className={styles["container"]}>
-      {type === "task" && <h1>Hi , What do you want to do next?</h1>}
+      {type === "task" && <h1>Hi , what do you want to do next?</h1>}
       <form onSubmit={(e) => handleSubmit(e)}>
         <FormControl isInvalid={!!error}>
           <InputGroup>
