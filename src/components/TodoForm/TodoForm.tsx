@@ -5,13 +5,14 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { TodoContext } from "context/todos";
 import { UserContext } from "context/user";
 import { useRouter } from "next/router";
-import { FormEvent, useContext, useEffect,useRef, useState } from "react";
-import { AiOutlineEnter,AiOutlinePlus } from "react-icons/ai";
+import { FormEvent, useContext, useEffect, useRef, useState } from "react";
+import { AiOutlineEnter, AiOutlinePlus } from "react-icons/ai";
 import { AUTH_ENDPOINT } from "utils/constants";
 import { generateSubTask, generateTask } from "utils/functions";
 
@@ -30,6 +31,7 @@ const TodoForm = ({
   const { user, logoutUser } = useContext(UserContext);
   const [task, setTask] = useState("");
   const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const resetTask = () => {
     setTask("");
@@ -39,6 +41,7 @@ const TodoForm = ({
     e.preventDefault();
     if (task.length) {
       try {
+        setLoading(true);
         await axios.get(AUTH_ENDPOINT, {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -58,6 +61,7 @@ const TodoForm = ({
         router.push("/login");
       } finally {
         resetTask();
+        setLoading(false);
       }
     } else setError("Please enter a valid task.");
   };
@@ -88,11 +92,19 @@ const TodoForm = ({
               ref={inputRef}
             />
             <InputRightElement
-              className={styles["form-right-element"]}
+              
               width="3.5rem"
             >
-              Hit{" "}
-              <AiOutlineEnter className={styles["form-right-element-icon"]} />
+              {loading ? (
+                <Spinner />
+              ) : (
+                <span className={styles["form-right-element"]}>
+                  Hit{" "}
+                  <AiOutlineEnter
+                    className={styles["form-right-element-icon"]}
+                  />
+                </span>
+              )}
             </InputRightElement>
           </InputGroup>
           <FormErrorMessage>Please enter a valid task.</FormErrorMessage>
