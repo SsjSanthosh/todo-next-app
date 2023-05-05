@@ -1,0 +1,15 @@
+@import "styles/variables";
+.container {
+  width: 400px;
+  margin: 10% auto;
+}
+
+.form-items {
+  display: flex;
+  flex-direction: column;
+  row-gap: $sp-xl;
+}
+
+.password-input {
+    padding-right: $sp-xxxl;
+}

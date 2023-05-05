@@ -11,7 +11,7 @@ const ThemeToggle = () => {
     <div>
       <FormControl className={styles["container"]}>
         <label htmlFor="theme-toggle">
-          {isDarkMode ? (
+          {!isDarkMode ? (
             <BsFillSunFill className={iconClassName} />
           ) : (
             <MdDarkMode className={iconClassName} />
@@ -20,7 +20,7 @@ const ThemeToggle = () => {
         <Switch
           name="theme-toggle"
           onChange={toggleColorMode}
-          defaultChecked={isDarkMode}
+          defaultChecked={!isDarkMode}
           size="lg"
         ></Switch>
       </FormControl>
